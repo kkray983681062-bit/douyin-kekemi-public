@@ -41,8 +41,8 @@
 需要 Python 3.10+、Node.js 20+ 和本人有权使用的抖音网页 Cookie。
 
 ```bash
-git clone https://github.com/kkray983681062-bit/douyin-kekemi.git
-cd douyin-kekemi
+git clone https://github.com/kkray983681062-bit/douyin-kekemi-public.git
+cd douyin-kekemi-public
 python -m venv .venv
 ```
 
