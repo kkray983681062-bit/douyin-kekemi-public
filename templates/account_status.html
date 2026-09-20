@@ -1,0 +1,48 @@
+{% extends "auth_base.html" %}
+{% block title %}账号状态 · 克克咪{% endblock %}
+{% block page_name %}status{% endblock %}
+{% block panel %}
+  <div class="panel-heading status-heading">
+    <span class="eyebrow">ACCOUNT STATUS</span>
+    <h2>{{ current_user.username }}</h2>
+    <p>{{ current_user.email_normalized }}</p>
+  </div>
+
+  {% if current_user.status == 'pending' %}
+    <div class="status-card pending">
+      <span class="status-icon" aria-hidden="true">◷</span>
+      <div>
+        <strong>等待管理员审核</strong>
+        <p>申请已经收到。审核通过后，请重新登录进入直播数据页。</p>
+      </div>
+    </div>
+  {% elif current_user.status == 'rejected' %}
+    <div class="status-card rejected">
+      <span class="status-icon" aria-hidden="true">×</span>
+      <div>
+        <strong>申请未通过</strong>
+        <p>{{ current_user.status_reason or '管理员未填写具体原因。' }}</p>
+      </div>
+    </div>
+    <button id="resubmitButton" class="primary-button" type="button">重新提交审核</button>
+  {% elif current_user.status == 'suspended' %}
+    <div class="status-card suspended">
+      <span class="status-icon" aria-hidden="true">!</span>
+      <div>
+        <strong>账号已暂停</strong>
+        <p>{{ current_user.status_reason or '请联系管理员了解详情。' }}</p>
+      </div>
+    </div>
+  {% elif current_user.status == 'active' %}
+    <div class="status-card active">
+      <span class="status-icon" aria-hidden="true">✓</span>
+      <div>
+        <strong>账号已通过审核</strong>
+        <p>请退出后重新登录，系统会签发完整访问会话。</p>
+      </div>
+    </div>
+  {% endif %}
+
+  <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+  <button id="logoutButton" class="secondary-button full-width" type="button">退出登录</button>
+{% endblock %}

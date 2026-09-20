@@ -1,0 +1,41 @@
+{% extends "auth_base.html" %}
+{% block title %}登录 · 克克咪{% endblock %}
+{% block page_name %}login{% endblock %}
+{% block panel %}
+  <div class="panel-heading">
+    <span class="eyebrow">WELCOME BACK</span>
+    <h2>登录</h2>
+    <p>使用用户名或邮箱进入</p>
+  </div>
+
+  <form id="loginForm" class="auth-form" novalidate>
+    <label>
+      <span>用户名或邮箱</span>
+      <input name="identifier" autocomplete="username" required placeholder="请输入用户名或邮箱">
+    </label>
+    <label>
+      <span>密码</span>
+      <input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="请输入密码">
+    </label>
+    <button class="primary-button" type="submit">登录</button>
+  </form>
+
+  <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+
+  <div class="panel-links">
+    <a href="/register">申请注册</a>
+    <button id="forgotToggle" class="text-button" type="button">忘记密码</button>
+  </div>
+
+  <form id="forgotForm" class="auth-form secondary-form" hidden novalidate>
+    <div class="secondary-heading">
+      <strong>找回密码</strong>
+      <span>输入用户名或注册邮箱，我们会发送重置链接。</span>
+    </div>
+    <label>
+      <span>用户名或邮箱</span>
+      <input name="identifier" autocomplete="username" required placeholder="请输入用户名或邮箱">
+    </label>
+    <button class="secondary-button" type="submit">发送重置邮件</button>
+  </form>
+{% endblock %}

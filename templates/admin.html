@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Admin · 克克咪</title>
+  <link rel="stylesheet" href="/static/auth.css?v=1">
+</head>
+<body class="admin-body" data-role="{{ current_user.role }}">
+  <header class="admin-header">
+    <a class="site-brand" href="/">
+      <img src="/static/assets/kekemi-avatar.jpg" alt="" class="site-avatar">
+      <span>克克咪</span>
+    </a>
+    <div class="admin-account">
+      <span>{{ current_user.username }}</span>
+      <span class="role-chip">{{ current_user.role }}</span>
+      <a href="/">返回直播页</a>
+      <button id="adminLogout" class="text-button" type="button">退出</button>
+    </div>
+  </header>
+
+  <main class="admin-shell">
+    <section class="admin-title-row">
+      <div>
+        <span class="eyebrow">ADMIN CONSOLE</span>
+        <h1>成员与权限</h1>
+        <p>审核注册申请、管理账号状态并查看操作记录。</p>
+      </div>
+      <nav class="tool-links" aria-label="现有管理员工具">
+        <a href="/?view=hostWeekly">主持周榜</a>
+        <a href="/?view=visitorWeekly">游客周榜</a>
+        <a href="/?view=giftLibrary">礼物库</a>
+        <a href="/?view=giftAssignments">礼物归属</a>
+      </nav>
+    </section>
+
+    <div id="adminMessage" class="form-message" role="status" aria-live="polite"></div>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>用户管理</h2>
+          <p id="userCount">正在加载…</p>
+        </div>
+        <label class="status-filter">
+          <span>状态</span>
+          <select id="statusFilter">
+            <option value="">全部</option>
+            <option value="pending" selected>待审核</option>
+            <option value="active">已启用</option>
+            <option value="rejected">已驳回</option>
+            <option value="suspended">已暂停</option>
+          </select>
+        </label>
+      </div>
+      <div id="userList" class="user-list" aria-live="polite"></div>
+    </section>
+
+    <section class="admin-panel audit-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>管理员操作日志</h2>
+          <p>最近 100 条权限与账号状态变更</p>
+        </div>
+        <button id="refreshAudit" class="secondary-button compact" type="button">刷新</button>
+      </div>
+      <div id="auditList" class="audit-list"></div>
+    </section>
+  </main>
+  <script src="/static/admin.js?v=2"></script>
+</body>
+</html>

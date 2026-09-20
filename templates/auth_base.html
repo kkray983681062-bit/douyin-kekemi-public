@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>{% block title %}克克咪{% endblock %}</title>
+  <link rel="stylesheet" href="/static/auth.css?v=1">
+</head>
+<body class="auth-body" data-page="{% block page_name %}auth{% endblock %}">
+  <div class="auth-backdrop" aria-hidden="true"></div>
+  <div class="auth-shell">
+    <header class="auth-header">
+      <a class="site-brand" href="/login" aria-label="克克咪登录首页">
+        <img src="/static/assets/kekemi-avatar.jpg" alt="" class="site-avatar">
+        <span>克克咪</span>
+      </a>
+      <nav class="auth-nav" aria-label="账号导航">
+        <a href="/login">登录</a>
+        <a href="/register">注册</a>
+      </nav>
+    </header>
+
+    <main class="auth-main">
+      <section class="auth-wordmark" aria-label="示例 RU·YUE">
+        <h1>示例</h1>
+        <p>RU·YUE</p>
+      </section>
+
+      <section class="auth-panel">
+        {% block panel %}{% endblock %}
+      </section>
+    </main>
+  </div>
+  <script src="/static/auth.js?v=1"></script>
+</body>
+</html>

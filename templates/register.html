@@ -1,0 +1,37 @@
+{% extends "auth_base.html" %}
+{% block title %}注册 · 克克咪{% endblock %}
+{% block page_name %}register{% endblock %}
+{% block panel %}
+  <div class="panel-heading">
+    <span class="eyebrow">REQUEST ACCESS</span>
+    <h2>注册</h2>
+    <p>提交后需由管理员审核</p>
+  </div>
+
+  <form id="registerForm" class="auth-form" novalidate>
+    <div class="field-grid">
+      <label>
+        <span>用户名</span>
+        <input name="username" autocomplete="username" minlength="2" maxlength="24" required placeholder="2–24 个字符">
+      </label>
+      <label>
+        <span>邮箱</span>
+        <input name="email" type="email" autocomplete="email" required placeholder="name@example.com">
+      </label>
+    </div>
+    <label>
+      <span>密码</span>
+      <input name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="至少 8 位">
+    </label>
+    <label>
+      <span>邀请码</span>
+      <input name="invite_code" type="password" autocomplete="off" required placeholder="请输入邀请码">
+    </label>
+    <button class="primary-button" type="submit">提交注册</button>
+  </form>
+
+  <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+  <div class="panel-links panel-links-single">
+    <a href="/login">已有账号，返回登录</a>
+  </div>
+{% endblock %}

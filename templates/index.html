@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>克克咪</title>
+  <link rel="stylesheet" href="/static/style.css?v=35">
+  <script src="/static/anime.min.js"></script>
+</head>
+{% set is_admin = current_user and current_user.role in ('admin', 'super_admin') %}
+<body data-current-role="{{ current_user.role if current_user else '' }}">
+<div class="kekemi-decor" aria-hidden="true">
+  <div class="kekemi-decor-cluster">
+    <img class="kekemi-decor-layer kekemi-decor-moon" src="/static/assets/kekemi-moon.webp" alt="" decoding="async">
+    <img class="kekemi-decor-layer kekemi-decor-butterfly" src="/static/assets/kekemi-butterfly.webp" alt="" decoding="async">
+  </div>
+  <img class="kekemi-decor-layer kekemi-decor-water" src="/static/assets/kekemi-water.webp" alt="" decoding="async">
+  <div class="kekemi-decor-wordmark"><span>克克咪</span><small>KE·KE·MI</small></div>
+</div>
+<div class="container">
+  <div class="header-area" id="headerArea">
+    <div class="header-main">
+      <h1 class="brand-title">
+        <img class="brand-avatar" src="/static/assets/kekemi-avatar.jpg" alt="">
+        克克咪
+      </h1>
+      {% if is_admin %}
+      <div class="input-group" style="position:relative">
+        <input id="input" type="text" placeholder="抖音号 / 链接" autocomplete="off" enterkeyhint="search">
+        <button id="btn" onclick="handleBtnClick()">🔍 监听</button>
+        <div id="historyDropdown" class="history-dropdown"></div>
+      </div>
+      {% endif %}
+      <div class="account-menu">
+        <span class="account-name">{{ current_user.username if current_user else '' }}</span>
+        {% if is_admin %}<a href="/admin">Admin</a>{% endif %}
+        {% if auth_enabled %}<button id="accountLogout" type="button" onclick="logoutAccount()">退出</button>{% endif %}
+      </div>
+    </div>
+    {% if is_admin %}<div class="hint">支持：抖音号 · 直播间链接 · 主页链接</div>{% endif %}
+  </div>
+  <div id="silencePanel" class="silence-panel"></div>
+  <div id="toastLayer" class="toast-layer"></div>
+
+  <div class="status-bar" id="statusBar">
+    <span><span class="dot gray" id="dot"></span><span id="statusText">未连接</span></span>
+    <span class="mode-group">
+      <span id="statsText" class="stats-text" style="margin-right:4px"></span>
+      <span class="mode-btn active" id="modeMystery" onclick="switchMode('mystery')">🎯神秘人</span>
+      <span class="mode-btn" id="modeAll" onclick="switchMode('all')">📋全部</span>
+      <span class="mode-btn" id="modeFeed" onclick="switchMode('feed')">🖥公屏</span>
+      <span class="mode-btn" id="modeDaily" onclick="switchMode('daily')">📊日榜</span>
+      {% if is_admin %}
+      <span class="mode-btn admin-mode" id="modeHostWeekly" onclick="switchMode('hostWeekly')">🎤主持周榜</span>
+      <span class="mode-btn admin-mode" id="modeVisitorWeekly" onclick="switchMode('visitorWeekly')">💎游客周榜</span>
+      <span class="mode-btn admin-mode" id="modeGiftLibrary" onclick="switchMode('giftLibrary')">🧰礼物库</span>
+      <span class="mode-btn admin-mode" id="modeGiftAssignments" onclick="switchMode('giftAssignments')">📝归属修正</span>
+      {% endif %}
+    </span>
+  </div>
+
+  <div id="roomSelector" class="room-selector"></div>
+  <section id="dataPanel" class="data-panel">
+    <div class="data-panel-toggle-row">
+      <span id="dataPanelTitle" class="data-panel-title">🎯 神秘人</span>
+      <button id="dataPanelToggle" class="data-panel-toggle" type="button" aria-expanded="true" aria-controls="dataPanelBody">收起 ↑</button>
+    </div>
+    <div id="dataPanelBody" class="data-panel-body">
+      <div class="events" id="events">
+        {% if is_admin %}
+        <div class="empty"><div class="icon">🎯</div>输入抖音号或链接<br>点击「监听」开始</div>
+        {% else %}
+        <div class="empty"><div class="icon">📡</div>正在加载监听中的直播间</div>
+        {% endif %}
+      </div>
+      <div id="feedPane" class="feed-pane" style="display:none">
+        <div id="feedContainer" class="feed-container"></div>
+        <button id="feedNewMessageBtn" class="feed-new-btn" type="button" style="display:none">↓ 0 条新消息</button>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+window.KEKEMI_AUTH = {{ {
+  'enabled': auth_enabled,
+  'role': current_user.role if current_user else '',
+  'username': current_user.username if current_user else ''
+}|tojson }};
+</script>
+<script src="/static/app.js?v=49"></script>
+</body>
+</html>
